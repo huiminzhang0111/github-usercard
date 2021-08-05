@@ -3,7 +3,16 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-
+axios.get('https://api.github.com/users/huiminzhang')
+  .then((res) => {
+    console.log(res)
+    // const myfollower = res.data.followers;
+    // console.log(myfollower);
+    // res.data.message.forEach(followers => {
+    //   const myfollower = 
+    // })
+  })
+  .catch(err => console.error(err));
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -17,6 +26,16 @@
     and append the returned markup to the DOM as a child of .cards
 */
 
+function getCards(){
+  axios.get(`https://api.github.com/users/huiminzhang0111`)
+    .then(res => {
+      const userCard = usercardMaker(res.data)
+      entryPoint.appendChild(userCard);
+      console.log('here');
+    })
+  .catch(err => console.error(err));
+}
+getCards()
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -28,8 +47,7 @@
     user, and adding that card to the DOM.
 */
 
-const followersArray = [];
-
+const followersArray = ['https://api.github.com/users/tetondan','https://api.github.com/users/dustinmyers','https://api.github.com/users/justsml','https://api.github.com/users/luishrd','https://api.github.com/users/bigknell']
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -49,6 +67,58 @@ const followersArray = [];
       </div>
     </div>
 */
+const entryPoint = document.querySelector('.cards');
+
+function usercardMaker(user){
+  //console.log(user);
+  //instantiating the elements
+  const usercard = document.createElement('div');
+  const image = document.createElement('img');
+  const cardinfo = document.createElement('div');
+  const heading = document.createElement('h3');
+  const username = document.createElement('p');
+  const location = document.createElement('p');
+  const profile = document.createElement('p');
+  const address = document.createElement('a');
+  const followers = document.createElement('p');
+  const following = document.createElement('p');
+  const bio = document.createElement('p');
+  //setting class names, attributes, and txt
+
+  usercard.classList.add('.card');
+  cardinfo.classList.add('card-info');
+  heading.classList.add('name');
+  username.classList.add('username');
+
+  image.src = `${user.avatar_url}`;
+  heading.textContent = `Login Info: ${user.login}`;
+  username.textContent = `Name: ${user.name}`;
+  location.textContent =`Location: ${user.location}`;
+  profile.textContent = 'Profile: ';
+  address.textContent = user.html_url;
+  followers.textContent = user.followers;
+  following.textContent = user.following;
+  bio.textContent = user.bio;
+
+  //creating the hierarchy
+  usercard.appendChild(image);
+  usercard.appendChild(cardinfo);
+  cardinfo.appendChild(heading);
+  cardinfo.appendChild(username);
+  cardinfo.appendChild(location);
+  cardinfo.appendChild(profile);
+  profile.appendChild(address);
+  cardinfo.appendChild(followers);
+  cardinfo.appendChild(following);
+  cardinfo.appendChild(bio);
+
+  //maybe adding some interactivity here??
+
+
+  //never forget to return
+  return usercard;
+}
+
 
 /*
   List of LS Instructors Github username's:
