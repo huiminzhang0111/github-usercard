@@ -26,17 +26,17 @@
     and append the returned markup to the DOM as a child of .cards
 */
 
-function getCards(){
-  axios.get(`https://api.github.com/users/huiminzhang0111`)
-    .then(res => {
-      const userCard = usercardMaker(res.data)
-      document.querySelector('.cards').appendChild(userCard);
-    })
-  .catch(err => console.error(err));
-}
+// function getCards(){
+//   axios.get(`https://api.github.com/users/huiminzhang0111`)
+//     .then(res => {
+//       const userCard = usercardMaker(res.data)
+//       document.querySelector('.cards').appendChild(userCard);
+//     })
+//   .catch(err => console.error(err));
+// }
+// getCards()
 
 
-getCards()
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
     follow this link in your browser https://api.github.com/users/<Your github name>/followers,
@@ -48,7 +48,17 @@ getCards()
     user, and adding that card to the DOM.
 */
 
-const followersArray = ['https://api.github.com/users/tetondan','https://api.github.com/users/dustinmyers','https://api.github.com/users/justsml','https://api.github.com/users/luishrd','https://api.github.com/users/bigknell']
+const followersArray = ['tetondan','dustinmyers','justsml','luishrd','bigknell'];
+followersArray.forEach(item => {
+  //console.log('here');
+  axios.get(`https://api.github.com/users/${item}`)
+    .then(res => {
+      const userCard = usercardMaker(res.data)
+      document.querySelector('.cards').appendChild(userCard);
+    })
+    .catch(err => console.error(err));
+})
+
 /*
   STEP 3: Create a function that accepts a single object as its only argument.
     Using DOM methods and properties, create and return the following markup:
@@ -95,7 +105,8 @@ function usercardMaker(user){
   username.textContent = `Name: ${user.name}`;
   location.textContent =`Location: ${user.location}`;
   profile.textContent = 'Profile: ';
-  address.href = `${user.html_url}`
+  address.href = `${user.html_url}`;
+  address.target = '_blank';
   address.textContent = user.html_url;
   followers.textContent = `Followers: ${user.followers}`;
   following.textContent = `Followeing: ${user.following}`;
