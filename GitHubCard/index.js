@@ -3,16 +3,16 @@
     (replacing the placeholder with your Github name):
     https://api.github.com/users/<your name>
 */
-axios.get('https://api.github.com/users/huiminzhang')
-  .then((res) => {
-    console.log(res)
-    // const myfollower = res.data.followers;
-    // console.log(myfollower);
-    // res.data.message.forEach(followers => {
-    //   const myfollower = 
-    // })
-  })
-  .catch(err => console.error(err));
+// axios.get('https://api.github.com/users/huiminzhang')
+//   .then((res) => {
+//     console.log(res)
+//     // const myfollower = res.data.followers;
+//     // console.log(myfollower);
+//     // res.data.message.forEach(followers => {
+//     //   const myfollower = 
+//     // })
+//   })
+//   .catch(err => console.error(err));
 /*
   STEP 2: Inspect and study the data coming back, this is YOUR
     github info! You will need to understand the structure of this
@@ -30,11 +30,12 @@ function getCards(){
   axios.get(`https://api.github.com/users/huiminzhang0111`)
     .then(res => {
       const userCard = usercardMaker(res.data)
-      entryPoint.appendChild(userCard);
-      console.log('here');
+      document.querySelector('.cards').appendChild(userCard);
     })
   .catch(err => console.error(err));
 }
+
+
 getCards()
 /*
   STEP 5: Now that you have your own card getting added to the DOM, either
@@ -67,10 +68,9 @@ const followersArray = ['https://api.github.com/users/tetondan','https://api.git
       </div>
     </div>
 */
-const entryPoint = document.querySelector('.cards');
 
 function usercardMaker(user){
-  //console.log(user);
+  //console.log('erroe?');
   //instantiating the elements
   const usercard = document.createElement('div');
   const image = document.createElement('img');
@@ -85,7 +85,7 @@ function usercardMaker(user){
   const bio = document.createElement('p');
   //setting class names, attributes, and txt
 
-  usercard.classList.add('.card');
+  usercard.classList.add('card');
   cardinfo.classList.add('card-info');
   heading.classList.add('name');
   username.classList.add('username');
@@ -95,10 +95,11 @@ function usercardMaker(user){
   username.textContent = `Name: ${user.name}`;
   location.textContent =`Location: ${user.location}`;
   profile.textContent = 'Profile: ';
+  address.href = `${user.html_url}`
   address.textContent = user.html_url;
-  followers.textContent = user.followers;
-  following.textContent = user.following;
-  bio.textContent = user.bio;
+  followers.textContent = `Followers: ${user.followers}`;
+  following.textContent = `Followeing: ${user.following}`;
+  bio.textContent = `Bio Info: ${user.bio}`;
 
   //creating the hierarchy
   usercard.appendChild(image);
@@ -111,9 +112,6 @@ function usercardMaker(user){
   cardinfo.appendChild(followers);
   cardinfo.appendChild(following);
   cardinfo.appendChild(bio);
-
-  //maybe adding some interactivity here??
-
 
   //never forget to return
   return usercard;
